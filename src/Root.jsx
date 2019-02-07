@@ -1,18 +1,26 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Provider} from "react-redux";
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import Home from './components/Home';
-import CollapsibleNavbar from './components/CollapsibleNavbar';
+import Header from './components/presentational/Header';
 
-export default class Root extends Component {
+class Root extends Component {
     render() {
         return (
             <Provider store={this.props.store}>
-                <CollapsibleNavbar />
-                <Router>
-                    <Route path="/" component={Home} />
-                </Router>
+                <div className="container">
+                    <Router>
+                        <Header />
+
+                    </Router>
+                </div>
             </Provider>
         )
     }
 }
+
+Root.propTypes = {
+    store: PropTypes.object.isRequired
+};
+
+export default Root;
