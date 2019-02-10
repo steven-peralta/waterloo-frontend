@@ -1,46 +1,45 @@
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
     carouselNextSlide,
     carouselPreviousSlide,
     carouselGoToIndex,
     carouselAnimationStart,
     carouselAnimationStop,
-} from '../../actions/uiActions';
-import {
-    fetchArticlesList
-} from "../../actions/apiActions";
-import Carousel from '../presentational/Carousel';
+    registerCarouselWithStore
+} from '../../actions/carouselActions';
+import Carousel from '../presentational/ArticleCarousel';
+
+const componentDidMount = () => {
+    this.props.fetchCarouselArticles()
+};
 
 const mapStateToProps = state => {
     return {
-        activeIndex: state.carouselActiveIndex,
-        animating: state.carouselAnimating,
-        fetchingArticlesList: state.fetchingArticlesList,
-        fetchedArticlesList: state.fetchedArticlesList,
-        articles: state.articles,
-        error: state.error
+        carousel: state.carousels[this.props.name],
+        articles: this.props.articles
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onExiting: () => {
-            dispatch(carouselAnimationStart())
+        mount: (id) => {
+            dispatch(registerCarouselWithStore(id))
         },
-        onExited: () => {
-            dispatch(carouselAnimationStop())
+        onExiting: (id) => {
+            dispatch(carouselAnimationStart(id))
         },
-        goToIndex: (index) => {
-            dispatch(carouselGoToIndex(index))
+        onExited: (id) => {
+            dispatch(carouselAnimationStop(id))
         },
-        next: () => {
-            dispatch(carouselNextSlide())
+        goToIndex: (id, index) => {
+            dispatch(carouselGoToIndex(id, index))
         },
-        previous: () => {
-            dispatch(carouselPreviousSlide())
+        next: (id) => {
+            dispatch(carouselNextSlide(id))
         },
-        fetchArticles: () => {
-            dispatch(fetchArticlesList(0, true))
+        previous: (id) => {
+            dispatch(carouselPreviousSlide(id))
         }
     }
 };
@@ -49,5 +48,10 @@ const TopStoryCarousel = connect(
     mapStateToProps,
     mapDispatchToProps
 )(Carousel);
+
+TopStoryCarousel.propTypes = {
+    name: PropTypes.string.isRequired,
+    articles: PropTypes.array.isRequired
+};
 
 export default TopStoryCarousel;

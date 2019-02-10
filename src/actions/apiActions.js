@@ -29,6 +29,8 @@ export function fetchArticlesList_failure(json) {
 export function fetchArticlesList(page = 0, carousel = false, topStory = false) {
     return {
         types: [fetchArticlesList_request, fetchArticlesList_success, fetchArticlesList_failure],
+        carousel: carousel,
+        topStory: topStory,
         swagger: api => api.articles.articles_list({page: page || '', carousel: carousel || '', topStory: topStory || ''})
     }
 }

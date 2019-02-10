@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
     CarouselItem,
     CarouselIndicators,
-    Carousel as ReactstrapCarousel
+    Carousel
 } from "reactstrap";
 
-export default class Carousel extends Component {
+class ArticleCarousel extends Component {
     componentDidMount() {
         this.props.fetchArticles();
     }
@@ -32,14 +33,14 @@ export default class Carousel extends Component {
 
             return (
                 <div className="jumbotron p-3 p-md-5 text-white rounded bg-dark">
-                    <ReactstrapCarousel
+                    <Carousel
                         activeIndex={this.props.activeIndex}
                         next={this.props.next}
                         previous={this.props.previous}
                     >
                         {slides}
                         <CarouselIndicators items={this.props.articles.results} activeIndex={this.props.activeIndex} onClickHandler={this.props.goToIndex}/>
-                    </ReactstrapCarousel>
+                    </Carousel>
                 </div>
             )
         }
@@ -47,3 +48,12 @@ export default class Carousel extends Component {
         return (<h1>wtf</h1>)
     }
 }
+
+ArticleCarousel.propTypes = {
+    articles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    activeIndex: PropTypes.number.isRequired,
+    next: PropTypes.func.isRequired,
+    previous: PropTypes.func.isRequired
+};
+
+export default ArticleCarousel;

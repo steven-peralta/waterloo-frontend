@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Provider} from "react-redux";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import Header from './components/presentational/Header';
-import Frontpage from "./components/container/Frontpage";
+import Frontpage from "./components/container/FrontpageApi";
 
 class Root extends Component {
     render() {
