@@ -3,25 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import swaggerClient from 'redux-swagger-client'
 import state from './reducers';
 import Root from './Root';
-import Swagger from 'swagger-client';
+import {fetchArticlesList} from "./actions/apiActions";
 
-const store = createStore(state, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-
-const opts = {
-    headers: 'application/vnd.oai.openapi+json'
+const swaggerOpts = {url: "http://localhost:8000/schema/",
+    requestInterceptor: (req) => {
+        req.headers.Accept = '*/*';
+    }
 };
 
-Swagger({url: "http://localhost:8000/schema/",
-    requestInterceptor: (req) => {
-        req.headers.Accept = opts.headers;
-    }
-}).then(client => {
-    ReactDOM.render(<Root client={client} store={store}/>, document.getElementById('root'));
-    console.log(client);
-});
+const enhancers = compose(
+    applyMiddleware(
+        thunk,
+        swaggerClient(swaggerOpts)
+    ),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+const store = createStore(state, enhancers);
+
+
+ReactDOM.render(<Root store={store}/>, document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import TopStoryCarousel from './TopStoryCarousel';
 
 export default class Frontpage extends Component {
     render() {
         return (
-            <h1>Hello world</h1>
+            <TopStoryCarousel />
         )
     }
 }

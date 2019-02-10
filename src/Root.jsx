@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Provider} from "react-redux";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import Header from './components/presentational/Header';
+import Frontpage from "./components/container/Frontpage";
 
 class Root extends Component {
     render() {
@@ -10,8 +11,10 @@ class Root extends Component {
             <Provider store={this.props.store}>
                 <div className="container">
                     <Router>
-                        <Header />
-
+                        <div>
+                            <Header />
+                            <Route path="/" component={Frontpage} />
+                        </div>
                     </Router>
                 </div>
             </Provider>
