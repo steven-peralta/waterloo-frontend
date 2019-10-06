@@ -14,11 +14,14 @@
     "react-scripts": "3.1.2",
     "reactstrap": "^8.0.1",
     "relay-compiler": "^6.0.0",
-    "relay-config": "^6.0.0"
+    "relay-config": "^6.0.0",
+    "relay-runtime": "^6.0.0",
+    "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "relay": "relay-compiler",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
